@@ -5,11 +5,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collector;
 
-import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
-
-public class Logic02 {
+public class Logic2 {
 	
 	static List<Integer> firstPlace = new ArrayList<>(); // 1등 번호 리스트
 	static List<Integer> secondPlace = new ArrayList<>(); // 2등 번호가 리스트
@@ -20,9 +17,12 @@ public class Logic02 {
 	
 	static Random ra = new Random(); // 1~45(또는 그 큰 범위 {-45~60}의 랜덤 숫자 뽑아내기 위한 Random 인스턴스 생성
 
+	static int max = 45;
+	static int min = 1;
+	
 	public static void main(String[] args) {
 
-		Logic02 lg = new Logic02(); // Logic에 생성해둔 메소드 사용하기 위한 인스턴스 생성
+		Logic2 lg = new Logic2(); // Logic에 생성해둔 메소드 사용하기 위한 인스턴스 생성
 		
  		// 로또 조건 값 {23 12 9 2 43 32} 당첨 갯수 1 3 10 50 100 500, 무작위 셔플 여부 "TRUE"
 		
@@ -52,16 +52,15 @@ public class Logic02 {
 		firstPlace.add(winNum3);
 		firstPlace.add(winNum4);
 		firstPlace.add(winNum5);
-		firstPlace.add(winNum6);
+		firstPlace.add(winNum6);	
 		
-		
-		lg.getRnum();
+		lg.getSecond(1);
 			
 	}
 
 	// 2등 당첨 로또 리스트를 만드는 메소드
 	void getSecond(int n) {
-
+		
 		// 2등 번호를 1등 번호와 동일하게 만들도록 복사 대입
 		secondPlace.addAll(firstPlace);
 
@@ -105,6 +104,7 @@ public class Logic02 {
 	// 5등 당첨 로또 리스트를 만드는 메소드
 	void getFifth(int n) {
 
+
 		fifthPlace.addAll(firstPlace);
 		replaceNum(fifthPlace, getRandom(n), getPullNum(n));
 		Collections.shuffle(fifthPlace);
@@ -136,7 +136,7 @@ public class Logic02 {
 		// 몇 개의 수를 뽑아낼지 정하기 위한 while 조건(1~6개까지 다르게 메소드를 적용하기 위함)
 		while(ranNum.size() < n) {
 			// 1부터 45까지의 랜덤 수를 rNum에 대입
-			rNum = ra.nextInt(45)+1;
+			rNum = getRnum(max, min);
 			// 1부터 45까지의 수 중에서 1등의 값을 제외한 수를 뽑기 위한 조건
 			if(!(firstPlace.contains(rNum))) {
 				// 1등의 6가지 숫자를 제외한 숫자가 뽑혔다면 리스트에 삽입
@@ -165,7 +165,7 @@ public class Logic02 {
 		// 몇 개의 수를 뽑아낼지 정하기 위한 while 조건(1~6개까지 다르게 메소드를 적용하기 위함)
 		while(pullNum.size() < n) {
 			// 1부터 45까지의 랜덤 수를 rNum에 대입
-			rNum = ra.nextInt(45)+1;
+			rNum = getRnum(max, min);
 			// 1부터 45까지의 수 중에서 1등의 값과 똑같은 수가 뽑기 위한 조건
 			if(firstPlace.contains(rNum)) {
 				// 1등의 6가지 숫자 중 똑같은 값이 뽑혔다면 리스트에 삽입
@@ -199,16 +199,17 @@ public class Logic02 {
 		return arr;
 	}
 	
-	int getRnum() {
+	
+	// 로또 번호의 범위값을 지정하는 메소드
+	int getRnum(int max, int min) {
 		
 		int rNum = 0;
+	
+		// nextInt(max - min + 1) + min; == min ~ max의 난수 생성
+		rNum = ra.nextInt(max-min+1) + min;
 		
-		//rNum = ra.nextInt(60)-105;
-		
-		
-		System.out.println(rNum);
-		
-		return 0;
+		return rNum;
+			
 	}
 	
 
