@@ -205,16 +205,23 @@ public class Logic4 {
 
 	// 로또 등수 표시 메소드
 	String getRank(List<Integer> arr) {
-
+		
+		// count 초기화
 		int count = 0;
 
+		// 1등의 사이즈만큼 for문 돌리면서 체크
 		for (int i = 0; i < firstPlace.size(); i++) {
+			// 비교할 리스트의 사이즈 for문 지정
 			for (int j = 0; j < arr.size(); j++) {
+				// 1등의 리스트 요소 하나와 비교할 리스트의 요소 전부 비교
+				// 하나라도 모두 체크한 후 같은 게 발견될 때마다 count++
 				if (firstPlace.get(i) == arr.get(j)) {
 					count++;
 				}
 			}
 		}
+		// count 숫자마다 등수를 지정. 이것을 최상단에서 값 한번 바꿔서 
+		// 모두 변경할 수 있는 방법이 있는지에 고민이 필요함.
 		switch (count) {
 		case 6:
 			return "1등";
