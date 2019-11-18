@@ -9,8 +9,8 @@ import java.util.Set;
 
 public class Logic5 {
 
-	List<Integer> firstPlace = new ArrayList<>(); // 로또 1등 리스트
-	List<Integer> lottoPlace = null;// = new ArrayList<>(); // 로또 당첨 리스트(2등~꼴등)
+	List<Integer> firstPlace = new ArrayList<>(); /* 로또 1등 리스트 */
+	List<Integer> lottoPlace = null; /* 로또 당첨 리스트(2등~꼴등) */
 
 	// lottoPlace에서 만든 리스트를 담아둘 리스트 생성
 	List<ArrayList<Integer>> listPlace = new ArrayList<ArrayList<Integer>>();
@@ -34,9 +34,10 @@ public class Logic5 {
 		/* 1등 번호 총 6개 지정 */
 		String [] stringFirstNum = null;
 		stringFirstNum = args[0].split(",");
+		int sfn = stringFirstNum.length;
 		int[] firstNum = new int[stringFirstNum.length];
-		if(stringFirstNum.length > 3) {
-			for(int i = 0; i < stringFirstNum.length; i++) {
+		if(sfn > 3) {
+			for(int i = 0; i < sfn; i++) {
 				firstNum[i] = Integer.parseInt(stringFirstNum[i]);
 				lg.firstPlace.add(firstNum[i]);
 			}
@@ -45,32 +46,37 @@ public class Logic5 {
 		/* 각 등수의 리스트 생성 개수 지정 */
 		String [] stringCountNum = null;
 		stringCountNum = args[1].split(",|:");
-		for(int i = 0; i < stringCountNum.length; i++) {
-			System.out.println(stringCountNum[i]);
+		int scn = stringCountNum.length;
+		int[] countNum = new int[5];
+		int cn = countNum.length;
+		if(scn > 7) {
+			for(int i = 0; i < cn; i++) {
+				countNum[i] = Integer.parseInt(stringCountNum[(2*i)+1]); 
+			}
 		}
 		
+		int totalCount = Integer.parseInt(args[2]);
+		int failCount = 0;
+		int sum = 0;
+		for(int i = 0; i < countNum.length; i++) {
+			sum += countNum[i];
+		}
+		failCount = totalCount - sum;
 
 		String rp = "ramdomPermission";
+		
+		if(args.length > 3) {
+			rp = args[3];
+		}
 
-//		for (int i = 0; i < firstCount; i++) {
-//			lg.getLotto(0); // 1등
-//		}
-//		for (int i = 0; i < secondCount; i++) {
-//			lg.getLotto(1); // 2등
-//		}
-//		for (int i = 0; i < thirdCount; i++) {
-//			lg.getLotto(2); // 3등
-//		}
-//		for (int i = 0; i < fourCount; i++) {
-//			lg.getLotto(3); // 4등
-//		}
-//		for (int i = 0; i < fifthCount; i++) {
-//			lg.getLotto(4); // 5등
-//		}
-//		for (int i = 0; i < failCount; i++) {
-//			lg.getLotto(6); // 꽝
-//		}
-//
+		/* 번호 몇 개 틀린걸 몇번 생성할지 결정(틀릴 개수, 생성개수) */
+		lg.executeCount(0, countNum[0]); /*1등*/
+		lg.executeCount(1, countNum[1]); /*2등*/
+		lg.executeCount(2, countNum[2]); /*3등*/
+		lg.executeCount(3, countNum[3]); /*4등*/
+		lg.executeCount(4, countNum[4]); /*5등*/
+		lg.executeCount(6, failCount); /* 미당첨 */
+
 		/* args값으로 TURE가 들어왔을 때 */
 		if (rp.equals("TRUE")) {
 			Collections.shuffle(lg.listPlace);
@@ -84,6 +90,7 @@ public class Logic5 {
 				System.out.print(lg.getRank(lg.listPlace.get(i)) + "\t");
 			}
 		}
+	
 	}
 
 	/* 로또 번호의 범위값을 지정하는 메소드 */
@@ -99,8 +106,7 @@ public class Logic5 {
 	public List<Integer> pullAndRanNum(int wrongNum, boolean ranOrPull) {
 
 		Set<Integer> uniqueNum = new HashSet<>();
-		List<Integer> num = null;
-
+		List<Integer> num = new ArrayList<>();
 		int rNum = 0;
 		while (uniqueNum.size() < wrongNum) {
 			rNum = getRnum(MAX, MIN);
@@ -125,7 +131,7 @@ public class Logic5 {
 
 		List<Integer> ranNum = pullAndRanNum(wrongNum, true); // true, 랜덤번호 생성
 		List<Integer> pullNum = pullAndRanNum(wrongNum, false); // false, 1등번호 생성
-
+	
 		for (int i = 0; i < lottoPlace.size(); i++) {
 			for (int j = 0; j < pullNum.size(); j++) {
 				if (lottoPlace.get(i) == pullNum.get(j)) {
@@ -134,18 +140,6 @@ public class Logic5 {
 			}
 		}
 		return lottoPlace;
-	}
-
-	public int[] shuffle(int[] array) {
-		int arr = array.length;
-		for (int i = 0; i < arr; i++) {
-			int a = (int) (Math.random() * arr);
-			int b = (int) (Math.random() * arr);
-			int tmp = array[a];
-			array[a] = array[b];
-			array[b] = tmp;
-		}
-		return array;
 	}
 
 	/* 로또 리스트를 만드는 메소드 */
@@ -186,7 +180,12 @@ public class Logic5 {
 			return "미당첨";
 		}
 		return "범위 지정 오류.";
-
+	}
+	
+	public void executeCount(int wrongNum, int countNum) {
+		for (int i = 0; i < countNum; i++) {
+			getLotto(wrongNum);
+		}
 	}
 
 }

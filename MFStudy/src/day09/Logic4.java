@@ -66,57 +66,51 @@ public class Logic4 {
 
 		String rq = "anyWord";
 
-//		if (args.length == 13) {
-//			rq = args[12];
-//		}
-//
-		
-//
-//		for (int i = 0; i < firstCount; i++) {
-//			lg.getLotto(0); // 1등
-//		}
-//		for (int i = 0; i < secondCount; i++) {
-//			lg.getLotto(1); // 2등
-//		}
-//		for (int i = 0; i < thirdCount; i++) {
-//			lg.getLotto(2); // 3등
-//		}
-//		for (int i = 0; i < fourCount; i++) {
-//			lg.getLotto(3); // 4등
-//		}
-//		for (int i = 0; i < fifthCount; i++) {
-//			lg.getLotto(4); // 5등
-//		}
-//		for (int i = 0; i < failCount; i++) {
-//			lg.getLotto(6); // 꽝
-//		}
-//
-//		// args값으로 TURE가 들어왔을 때 
-//		if (rq.equals("TRUE")) {
-//			// 현재 총 totalCount만큼 로또 리스트가가 들어있는 listPlace를 무작위 셔플 
-//			Collections.shuffle(lg.listPlace);
-//			for (int i = 0; i < lg.listPlace.size(); i++) {
-//				// 리스트의 요소(리스트)를 1개씩 출력함과 동시에 해당 출력 리스트의 등수도 같이 표시
-//				System.out.print(lg.getRank(lg.listPlace.get(i))+"\t");
-//				System.out.println(lg.listPlace.get(i));
-//				
-//			}
-//		} else {
-//			// TRUE값이 안들어왔다면
-//			for (int i = 0; i < lg.listPlace.size(); i++) {
-//				// 셔플을 하지말고 그대로 1등부터~미당첨까지 요소 출력과 등수 표시
-//				System.out.println(lg.listPlace.get(i));
-//				System.out.print(lg.getRank(lg.listPlace.get(i))+"\t");
-//			}
-//		}
+		if (args.length == 13) {
+			rq = args[12];
+		}
+
+		for (int i = 0; i < firstCount; i++) {
+			lg.getLotto(0); // 1등
+		}
+		for (int i = 0; i < secondCount; i++) {
+			lg.getLotto(1); // 2등
+		}
+		for (int i = 0; i < thirdCount; i++) {
+			lg.getLotto(2); // 3등
+		}
+		for (int i = 0; i < fourCount; i++) {
+			lg.getLotto(3); // 4등
+		}
+		for (int i = 0; i < fifthCount; i++) {
+			lg.getLotto(4); // 5등
+		}
+		for (int i = 0; i < failCount; i++) {
+			lg.getLotto(6); // 꽝
+		}
+
+		// args값으로 TURE가 들어왔을 때 
+		if (rq.equals("TRUE")) {
+			// 현재 총 totalCount만큼 로또 리스트가가 들어있는 listPlace를 무작위 셔플 
+			Collections.shuffle(lg.listPlace);
+			for (int i = 0; i < lg.listPlace.size(); i++) {
+				// 리스트의 요소(리스트)를 1개씩 출력함과 동시에 해당 출력 리스트의 등수도 같이 표시
+				System.out.print(lg.getRank(lg.listPlace.get(i))+"\t");
+				System.out.println(lg.listPlace.get(i));
+				
+			}
+		} else {
+			// TRUE값이 안들어왔다면
+			for (int i = 0; i < lg.listPlace.size(); i++) {
+				// 셔플을 하지말고 그대로 1등부터~미당첨까지 요소 출력과 등수 표시
+				System.out.println(lg.listPlace.get(i));
+				System.out.print(lg.getRank(lg.listPlace.get(i))+"\t");
+			}
+		}
 	}
 
 	// 로또 리스트를 만드는 메소드
 	
-	/**
-	 * asdflkjaslfkjasfld;kjasdfl;kjasdf
-	 * @param wrongNum
-	 */
 	void getLotto(int wrongNum) {
 
 		lottoPlace = new ArrayList<Integer>();
