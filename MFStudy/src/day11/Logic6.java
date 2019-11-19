@@ -1,29 +1,30 @@
-package day10;
+package day11;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 
-public class Logic5 {
+public class Logic6 {
 
 	List<Integer> firstPlace = new ArrayList<>(); /* 로또 1등 리스트 */
 	List<Integer> lottoPlace = null; /* 로또 당첨 리스트(2등~꼴등) */
-
-	// lottoPlace에서 만든 리스트를 담아둘 리스트 생성
+	
+	/* 생성한 로또 리스트를 담아둘 리스트 */
 	List<ArrayList<Integer>> listPlace = new ArrayList<ArrayList<Integer>>();
-
-	Random ra = new Random(); // 1~45(또는 그 큰 범위 {-45~60}의 랜덤 숫자 뽑아내기 위한 Random 인스턴스 생성
-
-	// 로또 범위를 지정할 상수 지정 (1 ~ 45)...(-45 ~ 60)...(MIN ~ MAX)
+	Random ra = new Random();
+	
+	/* 로또의 범위를 제한할 수 지정 */
 	static int MAX = 45;
 	static int MIN = 1;
 
 	public static void main(String[] args) {
 		
-		Logic5 lg = new Logic5(); 
+		Logic6 lg = new Logic6(); 
 
 		/*
 		 * 23,12,9,2,43,32 1:1,2:3,3:10,4:50,5:100 500 "TRUE" 
@@ -31,17 +32,15 @@ public class Logic5 {
 		 * count = 2, 5등 | count = 1, 미당첨 | count = 0, 미당첨
 		 */	
 		
-		lg.getFirstPlace(args[0]);
+		lg.getInputNum(args[0], false);
 		
-		int[] countNum = lg.getCountNum(args[1]);
+		System.out.println(lg.firstPlace);
+		
+		int[] countNum = lg.getInputNum(args[1], true);
 		
 		int totalCount = Integer.parseInt(args[2]);
-		int failCount = 0;
-		int sum = 0;
-		for(int i = 0; i < countNum.length; i++) {
-			sum += countNum[i];
-		}
-		failCount = totalCount - sum;
+		
+		int failCount = lg.getFailCount(countNum, totalCount);
 
 		String rp = "ramdomPermission";
 		
@@ -72,7 +71,48 @@ public class Logic5 {
 		}
 	
 	}
+	
+	/* 받은 문자열 스플릿하는 메소드 */
+	public String[] getStringNum(String inputNum) {
+		
+		String[] stringNum = null;
+		stringNum = inputNum.split(",|:");
+		return stringNum;	
+	}
+	
+	/* 스플릿한 문자 배열 인트배열로 옮겨 담는 메소드 */
+	public int[] getInputNum(String inputNum, boolean firstOrCount) {
+		
+		String[] stringNum = getStringNum(inputNum);
+		int[] num = new int[stringNum.length];
+		if(firstOrCount == true) {
+			num = new int[stringNum.length/2];
+		}
+		if(stringNum.length > 3) {
+			for(int i = 0; i < stringNum.length; i++) {
+				if(firstOrCount == true) {
+					num[i] = Integer.parseInt(stringNum[(2*i)+1]);
+				} else {
+					num[i] = Integer.parseInt(stringNum[i]);
+					firstPlace.add(num[i]);
+				}			
+			}
+		}
+		return num;
+	}
 
+	/* 미당첨 갯수 지정하는 메소드 */
+	public int getFailCount(int[] countNum, int totalCount) {
+		
+		int failCount = 0;
+		int sum = 0;
+		for(int i = 0; i < countNum.length; i++) {
+			sum += countNum[i];
+		}
+		failCount = totalCount - sum;
+		return failCount;
+	}
+	
 	/* 로또 번호의 범위값을 지정하는 메소드 */
 	public int getRnum(int max, int min) {
 
@@ -134,6 +174,13 @@ public class Logic5 {
 		Collections.shuffle(lottoPlace);
 		listPlace.add((ArrayList<Integer>) lottoPlace);
 	}
+	
+	/* 입력받은 숫자만큼 로또 리스트 생성하는 메소드 */
+	public void executeCount(int wrongNum, int countNum) {
+		for (int i = 0; i < countNum; i++) {
+			getLotto(wrongNum);
+		}
+	}
 
 	/* 로또 등수 표시 메소드 */
 	public String getRank(List<Integer> arr) {
@@ -164,45 +211,5 @@ public class Logic5 {
 		}
 		return "범위 지정 오류.";
 	}
-	
-	/* 입력받은 숫자만큼 로또 리스트 생성하는 메소드 */
-	public void executeCount(int wrongNum, int countNum) {
-		for (int i = 0; i < countNum; i++) {
-			getLotto(wrongNum);
-		}
-	}
-	
-	/* 1등 번호 총 6개 지정 */
-	public List<Integer> getFirstPlace(String inputNum) {
 		
-		String [] stringFirstNum = null;
-		stringFirstNum = inputNum.split(",");
-		int sfn = stringFirstNum.length;
-		int[] firstNum = new int[sfn];
-		if(sfn > 3) {
-			for(int i = 0; i < sfn; i++) {
-				firstNum[i] = Integer.parseInt(stringFirstNum[i]);
-				firstPlace.add(firstNum[i]);
-			}
-		}
-		return firstPlace;
-	}
-	
-	
-	
-	/* 각 등수의 리스트 생성 개수 지정 */
-	public int[] getCountNum(String inputNum) {
-		
-		String [] stringCountNum = null;
-		stringCountNum = inputNum.split(",|:");
-		int scn = stringCountNum.length;
-		int[] countNum = new int[scn/2];
-		if(scn > 7) {
-			for(int i = 0; i < scn/2; i++) {
-				countNum[i] = Integer.parseInt(stringCountNum[(2*i)+1]); 
-			}
-		}
-		return countNum;
-	}
-	
 }
