@@ -3,6 +3,7 @@
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 /******************************************************
  * 각 등수의 맞은 수를 관리하는 클래스-각등수의 맞은수 지정
  ****************************************************/
@@ -40,11 +41,19 @@ public class Lotto7 {
 
 		ArrayList<Integer> randomTemp;// 로또 생성
 
+		/**
+		 * 총 등수별 만들어야할 갯수
+		 */
 		ArrayList<Integer> numberForRank = new ArrayList<Integer>();// 총 등수별 만들어야할 갯수
+
+		/* 이제 등수별 만들어야할 갯수 */
 		ArrayList<Integer> makeNumberForRank = new ArrayList<Integer>();// 이제 등수별 만들어야할 갯수
+
+		// adfasfasdfaffafsdfsf
 		ArrayList<Integer> exisitNumberRank = new ArrayList<Integer>();// 등수별 만들어진 갯수
+		// adfasfasfasfasffasdf
 		ArrayList<Integer> exisitNumberRankFinal = new ArrayList<Integer>();// 최종 등수별 만들어진 갯수
-		
+
 		int totalGame = 0; // 전체 게임수
 		int failGame = 0; // 미등수 게임수
 		int winGame = 0; // 등수 게임수
@@ -455,5 +464,16 @@ public class Lotto7 {
 		}
 		
 		return firstNum;
+	}
+	
+	private boolean isNumber(String checkVal) {
+		try {
+			Integer.parseInt(checkVal);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+		
+		
 	}
 }

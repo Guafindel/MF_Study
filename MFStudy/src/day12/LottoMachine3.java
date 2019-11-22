@@ -104,32 +104,32 @@ public class LottoMachine3 {
 		// 1등 로또번호 뽑기
         for(int i = 0; i < userCntRank1; i++) {
         	checkLotto = 6;
-        	lottoListAll.add(lottoranNumList(orgLottoNumber, checkLotto));
+        	lottoListAll.add(lottorandomNumList(orgLottoNumber, checkLotto));
         }
         // 2등 로또번호 뽑기
         for(int i = 0; i < userCntRank2; i++) {
         	checkLotto = 5;
-        	lottoListAll.add(lottoranNumList(orgLottoNumber, checkLotto));
+        	lottoListAll.add(lottorandomNumList(orgLottoNumber, checkLotto));
         }
         // 3등 로또번호 뽑기
         for(int i = 0; i < userCntRank3; i++) {
         	checkLotto = 4;
-        	lottoListAll.add(lottoranNumList(orgLottoNumber, checkLotto));
+        	lottoListAll.add(lottorandomNumList(orgLottoNumber, checkLotto));
         }
         // 4등 로또번호 뽑기
         for(int i = 0; i < userCntRank4; i++) {
         	checkLotto = 3;
-        	lottoListAll.add(lottoranNumList(orgLottoNumber, checkLotto));
+        	lottoListAll.add(lottorandomNumList(orgLottoNumber, checkLotto));
         }
         // 5등 로또번호 뽑기
         for(int i = 0; i < userCntRank5; i++) {
         	checkLotto = 2;
-        	lottoListAll.add(lottoranNumList(orgLottoNumber, checkLotto));
+        	lottoListAll.add(lottorandomNumList(orgLottoNumber, checkLotto));
         }
         // 미당첨자 로또번호 뽑기 1등 번호와 비교하여 맞은개수 0 or 1
         for(int i = 0; i < userCntRankFail; i++) {
             checkLotto = (int)(Math.random() * 2);
-            lottoListAll.add(lottoranNumList(orgLottoNumber, checkLotto));
+            lottoListAll.add(lottorandomNumList(orgLottoNumber, checkLotto));
         }
         
 	}
@@ -177,7 +177,7 @@ public class LottoMachine3 {
 	
 	/**
 	 * 로또번호에 사용할 지정범위 안에 숫자를 뽑는다.
-	 * 
+	 * 최대/최소 값 포함
 	 * @param maxNum	: 최대값
 	 * @param minNum	: 최소값
 	 * @return			: 최대값~최소값 범위의 랜덤숫자를 출력
@@ -186,8 +186,8 @@ public class LottoMachine3 {
 		
 		int randomNum	= 0;
 
-		randomNum = (int)(Math.random() * (maxNum - minNum) + minNum);
-		
+		randomNum = (int)((Math.random() * (maxNum)) + minNum);
+
 		return randomNum;
 	}
 	// EOF getRanNum
@@ -200,10 +200,10 @@ public class LottoMachine3 {
      * @param checkLotto		: 1등번호랑 비교하여 맞은 개수 / 1등-6개, 2등-5개, 3등-4개, 4등-3개 ... 
      * @return					: 해당 등수의 6개의 로또번호
      */
-    public ArrayList<Integer> lottoranNumList(List<Integer> orgLottoNumber, int checkLotto) {
+    public ArrayList<Integer> lottorandomNumList(List<Integer> orgLottoNumber, int checkLotto) {
 
     	// 1등 당첨번호
-    	List<Integer> LottoNum = new ArrayList<Integer>(orgLottoNumber);
+    	List<Integer> lottoNum = new ArrayList<Integer>(orgLottoNumber);
     	// 로또 번호  6개를 담을 리스트
     	ArrayList<Integer> lottoNumList = new ArrayList<Integer>();
     	
@@ -219,12 +219,12 @@ public class LottoMachine3 {
 		if(sameNumCnt > 0) {
 			// 무한루프
 			while (true) {
-				
+				 
 				ranOrgIndex = (int)(Math.random() * 6);		// index 0~5 랜덤
-				addOrgNum 	= LottoNum.get(ranOrgIndex);	// 1등 당첨번호의 랜덤으로 뽑은 index값을 받는다.
+				addOrgNum 	= lottoNum.get(ranOrgIndex);	// 1등 당첨번호의 랜덤으로 뽑은 index값을 받는다.
 	
 				// 1등 당첨번호에 포함 && 넣을 리스트에 해당 값이 없어야 추가(중복제거)		
-				if (LottoNum.contains(addOrgNum) && !lottoNumList.contains(addOrgNum)) {					
+				if (lottoNum.contains(addOrgNum) && !lottoNumList.contains(addOrgNum)) {					
 					lottoNumList.add(addOrgNum);
 					numCnt++;
 					// System.out.println("A110. lottoNumList : " + lottoNumList + " \t / orgIndex[" + ranOrgIndex + "]");

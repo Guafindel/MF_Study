@@ -35,7 +35,7 @@ public class NewLottoList4 {
 	List<Integer> lottoNum = new ArrayList<Integer>();
 	// 등수별, 당첨, 미당첨 list
 	List<List<Integer>> firstList, secondList, thirdList, fourthList, fifthList, noLottoList,
-			allRankList = new ArrayList();
+			allRankList;
 
 	public static void main(String[] args) {
 		NewLottoList4 lotto = new NewLottoList4();
@@ -82,7 +82,7 @@ public class NewLottoList4 {
 		// 각 등수 별 인원을 먼저 split 후, 인원 별 명수만 따로 int 변수에 담기
 		rankAllSplit = rankAll.split(",");
 		
-			
+		
 		first = Integer.parseInt(rankAllSplit[0].substring(2));
 		second = Integer.parseInt(rankAllSplit[1].substring(2));
 		third = Integer.parseInt(rankAllSplit[2].substring(2));
@@ -135,15 +135,15 @@ public class NewLottoList4 {
 		int condition = 0;
 
 		// 각 등수별로 담아줄 list 선언
-		firstList = new ArrayList();
-		secondList = new ArrayList();
-		thirdList = new ArrayList();
-		fourthList = new ArrayList();
-		fifthList = new ArrayList();
-		noLottoList = new ArrayList();
+		firstList = new ArrayList(1);
+		secondList = new ArrayList(2);
+		thirdList = new ArrayList(3);
+		fourthList = new ArrayList(4);
+		fifthList = new ArrayList(5);
+		noLottoList = new ArrayList(10);
 
 		// list를 전부를 담을 list를 생성.
-		allRankList = new ArrayList();
+		allRankList = new ArrayList(100);
 
 		// 각 등수 별로 1등 번호와 같아야하는 개수를 정해 함수 실행하고 list로 담기
 		for (int i = 0; i < first; i++) {

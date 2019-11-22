@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Lotto00002 {
 	
@@ -21,6 +23,7 @@ public class Lotto00002 {
 	}
 	
 	/**
+	 * <pre>
 	 * 유효성 검사 메서드
 	 * 
 	 * 	유효성 검사 하기..
@@ -31,11 +34,11 @@ public class Lotto00002 {
 	 * 		5. 조건3의 총개수가 각 등수의개수보다 작은지 검사 (커야함)	OK
 	 * 		6. 1등 번호가 MIN 과 MAX 사이에 있는지 검사			OK
 	 * 		7. 조건 1,2,3에 숫자가 입력되었는지
-	 * 
+	 * </pre>
 	 * @param args	: 	arguments 에 입력한 조건배열
 	 */
 	public void valCheck(String[] args) {
-		
+		// 23,12,9,2,13,1 1:1,2:3,3:10,4:50,5:100 1000 true
 		// 1. TRUE 여부 (무작위출력)  -> 조건에 "TRUE"가 있으면 반환값 : true , 없으면 false
 		boolean shuffleCheck = Arrays.asList(args).contains("TRUE");
 		if (shuffleCheck == false) {	// args에 "TRUE"가 입력되지않으면 false
@@ -55,7 +58,8 @@ public class Lotto00002 {
 		// 3. 1등번호 중복검사 
 		// 6. 1등 번호가 MIN 과 MAX 사이에 있는지 검사
 		for (int i = 0; i < firstNum.length; i++) {
-			if (Integer.parseInt(firstNum[i]) < MIN || Integer.parseInt(firstNum[i]) > MAX) {
+			int item = Integer.parseInt(firstNum[i]);
+			if (item < MIN || item > MAX) {
 				System.out.println("1등번호의 범위는 1~45 입니다. 다시 입력해주세요.");
 				System.exit(0);
 			}
@@ -104,6 +108,13 @@ public class Lotto00002 {
 		List<Integer> firstLottoNum = new ArrayList<Integer>();	// int 배열에 있는 1등번호를 List에 담아주는 작업
 		for (int i : firstNum) {
 			firstLottoNum.add(i);
+		}
+		
+		Set<Integer> aaa = new HashSet<Integer>();
+		for(String item : firstIndex) {
+			aaa.add(Integer.parseInt(item));
+		}
+		if(aaa.size() != 6) {
 		}
 		
 		// 2. 각 등수마다 생성할 로또개수 조건을 분리해준다.

@@ -7,11 +7,11 @@ public class Validation {
 	/**
 	 * 각 args 타당성 검사
 	 * @param args
-	 * @param startnum
+	 * @param startNum
 	 * @param endnum
 	 * @return boolean
 	 */
-	public boolean checkValidation(String[] args, int startnum, int endnum) {
+	public boolean checkValidation(String[] args, int startNum, int endnum) {
 		// TODO Auto-generated method stub
 		String[] temp=null;
 		boolean check=true;
@@ -19,7 +19,7 @@ public class Validation {
 			switch (i) {
 			case 0:
 				temp=args[0].split(",");
-				check= checkZeroArgsValid(temp,startnum,endnum,i);
+				check= checkZeroArgsValid(temp,startNum,endnum,i);
 				if (check==false) {
 					return check;
 				}
@@ -48,15 +48,19 @@ public class Validation {
 
 
 	/**
+	 * <pre>
+	 * 2. 1번째가 , 스플릿해서 6개니?
+	 * 2.1 중복되는 숫자는 없니?
+     * 2.2 1~45 사이에 숫자니?
+	 * </pre>
 	 * 0번째 인자 타당성 검사
-	 * @param temp
-	 * @param endnum 
-	 * @param startnum 
-	 * @param i2 
+	 * @param temp 
+	 * @param endnum sdfs
+	 * @param startnum asdfas
+	 * @param i2  asdfasfasf
 	 * @return boolean
 	 */
 	private boolean checkZeroArgsValid(String[] temp, int startnum, int endnum, int argsIndex) {
-		// TODO Auto-generated method stub
 		int i=0;
 		while (i<temp.length) {
 			/*형식이 맞는지 체크*/
@@ -65,7 +69,8 @@ public class Validation {
 			}
 			/*startNum ~ encNum까지의 입력인지 체크*/
 			if (!(Integer.parseInt(temp[i].trim())>=startnum && Integer.parseInt(temp[i].trim())<=endnum)) {
-				System.out.println(startnum+"~"+endnum+"까지의 수만 가능합니다.");
+				String msg = String.format("%d ~ %d 까지의 수만 가능합니다.", startnum, endnum);
+				System.out.println(msg);
 				return false;
 			}
 			/*중복값 검사*/
@@ -182,7 +187,6 @@ public class Validation {
 			}
 		}
 		return true;
-		// TODO Auto-generated method stub
 	}
 	/**
 	 * 로또 등수 총수(1등,2등...)보다 한게임의 로또수보다 많은지 판단 
