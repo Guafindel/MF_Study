@@ -1,4 +1,5 @@
 package day1130;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -77,7 +78,8 @@ public class LottoMaker {
 	private void paramValidation(String[] param) throws Exception {
 		// 1. 입력한 Param 갯수 체크
 		if (param.length < 2) {
-			throw new Exception("파라메터가 없습니다.\nP1(필수) : 1등숫자(,로구분) / P2(필수) : 각등수별 갯수(1:1,2:3...) / P3(필수) : 생성할 전체 수 / P4(옵션) : Mix여부(TRUE) ");
+			throw new Exception(
+					"파라메터가 없습니다.\nP1(필수) : 1등숫자(,로구분) / P2(필수) : 각등수별 갯수(1:1,2:3...) / P3(필수) : 생성할 전체 수 / P4(옵션) : Mix여부(TRUE) ");
 		}
 		// 2. 항목별 순서체크
 		// 2.1.1 1등 체크 갯수체크
@@ -130,7 +132,8 @@ public class LottoMaker {
 		int noGradeCount = this.totalCount - totalGradeCount;
 		// 2.2.2 등수와 비등수 숫자 비교
 		if (totalGradeCount > noGradeCount) {
-			throw new Exception(String.format("등수에 포함되는 갯수는 비등수 보다 작아야 합니다.(등수 : %d, 비등수 : %d)", totalGradeCount, noGradeCount));
+			throw new Exception(
+					String.format("등수에 포함되는 갯수는 비등수 보다 작아야 합니다.(등수 : %d, 비등수 : %d)", totalGradeCount, noGradeCount));
 		}
 
 		// 3. mix여부
@@ -148,10 +151,8 @@ public class LottoMaker {
 	/**
 	 * 랜덤한 숫자 생성(양끝 포함)
 	 * 
-	 * @param fromInt
-	 *            시작숫자
-	 * @param toInt
-	 *            종료숫자
+	 * @param fromInt 시작숫자
+	 * @param toInt   종료숫자
 	 * @return
 	 */
 	private int makeRandom(int fromInt, int toInt) {
@@ -221,8 +222,7 @@ public class LottoMaker {
 	/**
 	 * 등수 생성
 	 * 
-	 * @param grade
-	 *            2 : 1등과 1개틀림, 3 : 1등과 2개틀림, 4 : 1등과 3개틀림, 5 : 1등과 4개틀림
+	 * @param grade 2 : 1등과 1개틀림, 3 : 1등과 2개틀림, 4 : 1등과 3개틀림, 5 : 1등과 4개틀림
 	 * @return
 	 */
 	private Set<Integer> makeGrade(int grade) {
@@ -235,24 +235,24 @@ public class LottoMaker {
 			int item = 0;
 			if (gradeList.size() < keepCount) {
 				item = (int) firstSet.toArray()[makeRandom(0, itemCount - 1)];
-				if(gradeList.contains(item) == false) {
+				if (gradeList.contains(item) == false) {
 					gradeList.add(item);
 				}
 			} else { // 새로 생성해서 추가
 				item = makeRandom(minNumber, maxNumber);
-				if(this.firstSet.contains(item) == false && gradeList.contains(item) == false) {
+				if (this.firstSet.contains(item) == false && gradeList.contains(item) == false) {
 					gradeList.add(item);
 				}
 			}
 		} while (gradeList.size() < itemCount);
-		
+
 		// 순서섞기
 		Collections.shuffle(gradeList);
 		Set<Integer> gradeSet = new LinkedHashSet<>();
-		for(Integer item : gradeList) {
+		for (Integer item : gradeList) {
 			gradeSet.add(item);
 		}
-		
+
 		return gradeSet;
 	}
 
@@ -297,7 +297,8 @@ public class LottoMaker {
 	 * @param gradeSet
 	 */
 	private void addGradeSet(int grade, Set<Integer> gradeSet) {
-		List<Set<Integer>> rowList = this.lottoMap.containsKey(grade) == false ? new ArrayList<>() : this.lottoMap.get(grade);
+		List<Set<Integer>> rowList = this.lottoMap.containsKey(grade) == false ? new ArrayList<>()
+				: this.lottoMap.get(grade);
 		rowList.add(gradeSet);
 
 		this.lottoMap.put(grade, rowList);

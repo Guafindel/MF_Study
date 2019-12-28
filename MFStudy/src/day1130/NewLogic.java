@@ -63,7 +63,6 @@ public class NewLogic {
 		NewLogic logic = new NewLogic();
 
 		try {
-
 			logic.getValidation(args);
 
 		} catch (Exception e) {
@@ -266,6 +265,12 @@ public class NewLogic {
 		return rankSet;
 	}
 
+	/**
+	 * 요소 값들을 받아 특정 등수의 행을 생성해 리스트에 삽입
+	 * @param numCount 특정 등수의 행 개수
+	 * @param rank 특정 등수를 생성할지 정하는 요소값
+	 * @param numList 생성한 행을 담을 등수 리스트
+	 */
 	private void getRankList(int numCount, int rank, List<Set<Integer>> numList) {
 		
 		if(numCount > 0) {
@@ -282,8 +287,13 @@ public class NewLogic {
 		}
 	}
 
+	/**
+	 * 2~9등까지 생성갯수, 등수값, 담을 리스트를 지정헤 생성후 삽입
+	 */
 	private void makeRankLottoList() {
 
+		this.allRankList.add(this.firstSet);
+		
 		getRankList(this.secondCount, 2, this.secondtList);
 
 		getRankList(this.thirdCount, 3, this.thirdList);
@@ -331,18 +341,21 @@ public class NewLogic {
 		return check;
 	}
 
-	private int getCountNum(int rank) {
 
-		int result = 0;
+	private void pullOutList() {
 
-		return result;
-
-	}
-
-	private String printLotto() {
-
-		String result = "";
-
-		return result;
+		int startNum = 1;
+		
+		if(this.setMix == true) {
+			for(int i = 0; i < this.allRankList.size(); i++) {
+				System.out.println(String.format("%d번 %s", startNum++, this.allRankList.get(i)));
+			}
+			for(int i = 0; i < this.noRankList.size(); i++) {
+				System.out.println(String.format("%d번 %s", startNum++, this.noRankList.get(i)));
+			}
+		} else {
+			Collections.shuffle(this.allRankList);
+		}
+		
 	}
 }
